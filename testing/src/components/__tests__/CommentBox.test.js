@@ -18,28 +18,23 @@ it("has a textarea and button", () => {
   expect(wrapped.find("button").length).toEqual(1);
 });
 
-it("has a textarea users can type in", () => {
-  const eventObject = {
-    target: {
-      value: "Hey there!"
-    }
-  };
-  wrapped.find("textarea").simulate("change", eventObject);
-  wrapped.update();
-  expect(wrapped.find("textarea").prop("value")).toEqual("Hey there!");
-});
+describe("Textarea-focused", () => {
+  beforeEach(() => {
+    const eventObject = {
+      target: {
+        value: "Hey there!"
+      }
+    };
+    wrapped.find("textarea").simulate("change", eventObject);
+    wrapped.update();
+  });
+  it("has a textarea users can type in", () => {
+    expect(wrapped.find("textarea").prop("value")).toEqual("Hey there!");
+  });
 
-it("clears the textarea when the form is submitted", () => {
-  const eventObject = {
-    target: {
-      value: "Hey there!"
-    }
-  };
-  wrapped.find("textarea").simulate("change", eventObject);
-  wrapped.update();
-  // expect(wrapped.find("textarea").prop("value")).toEqual("Hey there!");
-  // catch for a false positive if the above test was not done
-  wrapped.find("form").simulate("submit");
-  wrapped.update();
-  expect(wrapped.find("textarea").prop("value")).toEqual("");
+  it("clears the textarea when the form is submitted", () => {
+    wrapped.find("form").simulate("submit");
+    wrapped.update();
+    expect(wrapped.find("textarea").prop("value")).toEqual("");
+  });
 });
