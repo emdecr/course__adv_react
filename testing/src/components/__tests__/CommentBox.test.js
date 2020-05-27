@@ -1,12 +1,18 @@
 import React from "react";
 import { mount } from "enzyme";
 
+import Root from "Root";
 import CommentBox from "components/CommentBox";
 
 let wrapped;
+// NTS: can I give this an alias? ie. let/declare wrapper: component; or only in Typescript?
 
 beforeEach(() => {
-  wrapped = mount(<CommentBox />);
+  wrapped = mount(
+    <Root>
+      <CommentBox />
+    </Root>
+  );
 });
 
 afterEach(() => {
@@ -28,6 +34,7 @@ describe("Textarea-focused", () => {
     wrapped.find("textarea").simulate("change", eventObject);
     wrapped.update();
   });
+
   it("has a textarea users can type in", () => {
     expect(wrapped.find("textarea").prop("value")).toEqual("Hey there!");
   });

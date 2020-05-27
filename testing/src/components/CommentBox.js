@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "actions";
 
 export class CommentBox extends Component {
   state = {
@@ -11,6 +13,8 @@ export class CommentBox extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.props.saveComment(this.state.comment);
+
     this.setState({ comment: "" });
   };
 
@@ -27,4 +31,7 @@ export class CommentBox extends Component {
   }
 }
 
-export default CommentBox;
+export default connect(
+  null,
+  actions
+)(CommentBox);
